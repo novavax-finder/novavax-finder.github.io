@@ -25,7 +25,7 @@ export default {
         },
         {
           text: 'report an issue',
-          url: 'https://www.github.com/novavax-finder/novavax-finder.github.io/issues',
+          url: 'https://reddit.com/r/Novavax_vaccine_talk/comments/w1i9yi/',
         },
         {
           text: 'contribute',

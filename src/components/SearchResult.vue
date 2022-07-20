@@ -27,7 +27,7 @@
 
     <div class="section">
       <boolean-icon :value="result.in_stock" />
-      {{ result.supply_level }} in stock ({{ lastUpdated }})
+      {{ result.in_stock ? 'in' : 'out of' }} stock ({{ lastUpdated }})
       <br />
       <boolean-icon :value="result.offers_free_masks" /> free masks
       <br />

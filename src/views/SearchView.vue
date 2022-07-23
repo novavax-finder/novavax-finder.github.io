@@ -12,6 +12,9 @@
     <input type="checkbox" v-model="inStockOnly" />
     in stock only
 
+    <input type="checkbox" v-model="excludeCVS" />
+    exclude CVS
+
     <page-navigation v-if="isPaginated" :totalResults="totalResults" />
 
     <h2 v-if="isLoading">loading...</h2>
@@ -49,6 +52,7 @@ export default {
 
   data() {
     return {
+      excludeCVS: this.$route.query.excludeCVS || false,
       inStockOnly: this.$route.query.inStockOnly || false,
       isLoading: true,
       results: [],
@@ -73,6 +77,13 @@ export default {
       await this.reloadData()
     },
 
+    async excludeCVS() {
+      this.$router.push({
+        params: { page: null },
+        query: { excludeCVS: this.excludeCVS || undefined },
+      })
+    },
+
     async inStockOnly() {
       this.$router.push({
         params: { page: null },
@@ -95,6 +106,10 @@ export default {
         query += ' and (`in_stock` = true)'
       } else {
         query += ' and (`in_stock` is null OR `in_stock` = false)'
+      }
+
+      if (this.excludeCVS) {
+        query += ` and not contains(upper(\`loc_name\`), upper('cvs'))`
       }
 
       query += ') ' // end of filters

@@ -77,14 +77,14 @@ export default {
       await this.reloadData()
     },
 
-    async excludeCVS() {
+    excludeCVS() {
       this.$router.push({
         params: { page: null },
         query: { excludeCVS: this.excludeCVS || undefined },
       })
     },
 
-    async inStockOnly() {
+    inStockOnly() {
       this.$router.push({
         params: { page: null },
         query: { inStockOnly: this.inStockOnly || undefined },

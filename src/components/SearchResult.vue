@@ -10,9 +10,11 @@
       <br />
       {{ result.loc_phone }}
       <br />
-      <a :href="result.web_address" target="_blank">website</a> |
-      <a :href="result.pre_screen" target="_blank">prescreen</a> |
-      <a :href="googleMapsLink" target="_blank">map</a>
+      <div class="links">
+        <a :href="result.web_address" target="_blank">website</a>
+        <a :href="result.pre_screen" target="_blank">prescreen</a>
+        <a :href="googleMapsLink" target="_blank">map</a>
+      </div>
       <!-- <br /><br />
       Minimum age: {{ result.min_age_years }} -->
     </div>
@@ -20,7 +22,7 @@
     <div class="section hours">
       <span v-for="day in daysOfWeek" :key="day">
         <span class="day">{{ day.substr(0, 3) }}</span>
-        {{ result[`${day.toLowerCase()}_hours`] || 'closed' }}
+        {{ result[`${day.toLowerCase()}_hours`] || 'call for hours' }}
         <br />
       </span>
     </div>
@@ -89,7 +91,27 @@ export default {
   width: 3em;
 }
 
+.links {
+  a {
+    display: inline-block;
+
+    &:not([href]) {
+      display: none;
+    }
+
+    &:not(:last-child) {
+      margin-right: 0.5em;
+      padding-right: 0.5em;
+      border-right: 1px solid var(--color-background-2);
+    }
+  }
+}
+
 .section {
+  @media (min-width: 720px) {
+    max-width: 33%;
+  }
+
   &:not(:last-of-type) {
     margin-bottom: 1rem;
 

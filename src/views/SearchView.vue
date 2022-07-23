@@ -24,10 +24,16 @@
         :key="result[':id']"
         :result="result"
       />
-      <p v-if="!results.length && !inStockOnly">
-        No results found. Check your spelling or try again with (or without) an
-        abbreviation.<br />For example, <strong>Fort Worth</strong> instead of
-        <strong>Ft. Worth</strong>
+      <p v-if="!results.length">
+        No results found.
+        <span v-if="filtersEnabled">
+          Try turning off some filters or searching another location.
+        </span>
+        <span v-else>
+          Check your spelling or try again with (or without) an abbreviation.<br />
+          For example, <strong>Fort Worth</strong> instead of
+          <strong>Ft. Worth</strong>.
+        </span>
       </p>
     </div>
 
@@ -61,6 +67,10 @@ export default {
   },
 
   computed: {
+    filtersEnabled() {
+      return Object.keys(this.$route.query).length > 0
+    },
+
     isPaginated() {
       return this.totalResults > CDC_API_RESULT_LIMIT
     },
@@ -78,17 +88,11 @@ export default {
     },
 
     excludeCVS() {
-      this.$router.push({
-        params: { page: null },
-        query: { excludeCVS: this.excludeCVS || undefined },
-      })
+      this.updateFilters()
     },
 
     inStockOnly() {
-      this.$router.push({
-        params: { page: null },
-        query: { inStockOnly: this.inStockOnly || undefined },
-      })
+      this.updateFilters()
     },
   },
 
@@ -142,6 +146,16 @@ export default {
       const results = await this.getCdcResults()
       this.results = results
       this.isLoading = false
+    },
+
+    updateFilters() {
+      this.$router.push({
+        params: { page: null },
+        query: {
+          excludeCVS: this.excludeCVS || undefined,
+          inStockOnly: this.inStockOnly || undefined,
+        },
+      })
     },
   },
 

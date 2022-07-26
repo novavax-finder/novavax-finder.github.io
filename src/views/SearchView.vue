@@ -108,8 +108,6 @@ export default {
 
       if (this.inStockOnly) {
         query += ' and (`in_stock` = true)'
-      } else {
-        query += ' and (`in_stock` is null OR `in_stock` = false)'
       }
 
       if (this.excludeCVS) {

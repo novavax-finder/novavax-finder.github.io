@@ -12,8 +12,8 @@
     <input type="checkbox" v-model="inStockOnly" />
     in stock only
 
-    <input type="checkbox" v-model="excludeCVS" />
-    exclude CVS
+    <input type="checkbox" v-model="includeCVS" />
+    include CVS
 
     <page-navigation v-if="isPaginated" :totalResults="totalResults" />
 
@@ -27,7 +27,7 @@
       <p v-if="!results.length">
         No results found.
         <span v-if="filtersEnabled">
-          Try turning off some filters or searching another location.
+          Try changing some filters or searching another location.
         </span>
         <span v-else>
           Check your spelling or try again with (or without) an abbreviation.<br />
@@ -58,7 +58,7 @@ export default {
 
   data() {
     return {
-      excludeCVS: this.$route.query.excludeCVS || false,
+      includeCVS: this.$route.query.includeCVS || false,
       inStockOnly: this.$route.query.inStockOnly || false,
       isLoading: true,
       results: [],
@@ -87,7 +87,7 @@ export default {
       await this.reloadData()
     },
 
-    excludeCVS() {
+    includeCVS() {
       this.updateFilters()
     },
 
@@ -110,7 +110,7 @@ export default {
         query += ' and (`in_stock` = true)'
       }
 
-      if (this.excludeCVS) {
+      if (!this.includeCVS) {
         query += ` and not contains(upper(\`loc_name\`), upper('cvs'))`
       }
 
@@ -150,7 +150,7 @@ export default {
       this.$router.push({
         params: { page: null },
         query: {
-          excludeCVS: this.excludeCVS || undefined,
+          includeCVS: this.includeCVS || undefined,
           inStockOnly: this.inStockOnly || undefined,
         },
       })

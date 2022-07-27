@@ -109,7 +109,7 @@ export default {
 
 .section {
   @media (min-width: 720px) {
-    max-width: 33%;
+    width: 33%;
   }
 
   &:not(:last-of-type) {

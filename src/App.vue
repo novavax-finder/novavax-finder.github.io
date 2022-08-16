@@ -4,8 +4,9 @@
   </main>
   <footer>
     <span v-for="(link, index) in footerLinks" :key="index">
-      <a :href="link.url" target="_blank">{{ link.text }}</a>
-      <span v-if="index < footerLinks.length - 1"> | </span>
+      <a :href="link.url" :target="link.url[0] !== '/' ? '_blank' : undefined">
+        {{ link.text }}
+      </a>
     </span>
   </footer>
 </template>
@@ -18,6 +19,10 @@ export default {
         {
           text: 'data provided by the CDC',
           url: 'https://data.cdc.gov/Vaccinations/Vaccines-gov-COVID-19-vaccinating-provider-locatio/5jp2-pgaw/data',
+        },
+        {
+          text: 'rollout stats',
+          url: '/#/stats',
         },
         {
           text: 'view source code',
@@ -84,6 +89,13 @@ body {
     flex-shrink: 0;
     padding: 0.5rem;
     background-color: var(--color-background-0);
+
+    span:not(:last-of-type) {
+      border-right: 1px solid var(--color-background-2);
+      margin-right: 0.5em;
+      padding-right: 0.5em;
+      display: inline-block;
+    }
   }
 }
 

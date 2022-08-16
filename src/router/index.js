@@ -17,6 +17,15 @@ const routes = [
       ),
   },
   {
+    path: '/stats',
+    name: 'stats',
+    component: () =>
+      import(
+        /* webpackChunkName: "stats" */
+        '../views/StatsView.vue'
+      ),
+  },
+  {
     path: '/:pathMatch(.*)*',
     name: '404',
     component: HomeView,

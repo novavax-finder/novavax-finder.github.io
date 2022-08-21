@@ -18,6 +18,7 @@
     <page-navigation v-if="isPaginated" :totalResults="totalResults" />
 
     <h2 v-if="isLoading">loading...</h2>
+    <h1 v-else-if="isError">Error loading CDC data. Try again later.</h1>
     <div v-else>
       <search-result
         v-for="result in results"
@@ -60,6 +61,7 @@ export default {
     return {
       includeCVS: this.$route.query.includeCVS || false,
       inStockOnly: this.$route.query.inStockOnly || false,
+      isError: false,
       isLoading: true,
       results: [],
       totalResults: 0,
@@ -138,11 +140,18 @@ export default {
     },
 
     async reloadData() {
-      this.isLoading = true
-      const total = await this.getCdcResults(true)
-      this.totalResults = total[0] ? Number(total[0].__count_alias__) : 0
-      const results = await this.getCdcResults()
-      this.results = results
+      try {
+        this.isLoading = true
+        const total = await this.getCdcResults(true)
+        this.totalResults = total[0] ? Number(total[0].__count_alias__) : 0
+        const results = await this.getCdcResults()
+        this.results = results
+        this.isError = false
+      } catch (error) {
+        console.error(error)
+        this.isError = true
+      }
+
       this.isLoading = false
     },
 

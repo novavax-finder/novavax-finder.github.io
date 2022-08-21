@@ -1,6 +1,7 @@
 <template>
   <div class="stats">
     <h1 v-if="isLoading">Loading...</h1>
+    <h1 v-else-if="isError">Error loading CDC data. Try again later.</h1>
     <div v-else>
       <h1 class="administered">
         <strong>{{ stats.rollout.administered }}</strong>
@@ -31,6 +32,7 @@ export default {
 
   data() {
     return {
+      isError: false,
       isLoading: true,
       stats: {
         availability: {
@@ -75,18 +77,23 @@ export default {
   },
 
   async mounted() {
-    const rollout = await this.getRolloutStats()
-    this.stats.rollout = mapValues(
-      {
-        administered: rollout.administered_novavax,
-        distributed: rollout.distributed_novavax,
-      },
-      (value) => Number(value).toLocaleString()
-    )
+    try {
+      const rollout = await this.getRolloutStats()
+      this.stats.rollout = mapValues(
+        {
+          administered: rollout.administered_novavax,
+          distributed: rollout.distributed_novavax,
+        },
+        (value) => Number(value).toLocaleString()
+      )
 
-    this.stats.availability = {
-      inStock: await this.getAvailabilityStats(true),
-      total: await this.getAvailabilityStats(false),
+      this.stats.availability = {
+        inStock: await this.getAvailabilityStats(true),
+        total: await this.getAvailabilityStats(false),
+      }
+    } catch (error) {
+      console.error(error)
+      this.isError = true
     }
 
     this.isLoading = false

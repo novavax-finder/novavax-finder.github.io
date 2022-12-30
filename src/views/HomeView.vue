@@ -35,7 +35,7 @@ export default {
       }
 
       const route = [this.state, this.city || 'all']
-        .map((value) => encodeURIComponent(value.toLowerCase()))
+        .map((value) => encodeURIComponent(value.trim().toLowerCase()))
         .join('/')
 
       this.$router.push(`/${route}`)

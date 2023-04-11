@@ -30,7 +30,7 @@ export default {
         },
         {
           text: 'report an issue',
-          url: 'https://reddit.com/r/Novavax_vaccine_talk/comments/w1i9yi/',
+          url: 'https://www.reddit.com/message/compose/?to=poop_sox',
         },
         {
           text: 'contribute',

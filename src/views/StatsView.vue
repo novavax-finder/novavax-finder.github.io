@@ -78,7 +78,12 @@ export default {
 
   async mounted() {
     try {
-      const rollout = await this.getRolloutStats()
+      const [rollout, inStock, total] = await Promise.all([
+        this.getRolloutStats(),
+        this.getAvailabilityStats(true),
+        this.getAvailabilityStats(false),
+      ])
+
       this.stats.rollout = mapValues(
         {
           administered: rollout.administered_novavax,
@@ -87,10 +92,7 @@ export default {
         (value) => Number(value).toLocaleString()
       )
 
-      this.stats.availability = {
-        inStock: await this.getAvailabilityStats(true),
-        total: await this.getAvailabilityStats(false),
-      }
+      this.stats.availability = { inStock, total }
     } catch (error) {
       console.error(error)
       this.isError = true

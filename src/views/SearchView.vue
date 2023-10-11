@@ -1,5 +1,9 @@
 <template>
   <div class="search">
+    <p v-if="updateDate">
+      data last updated by the CDC on
+      {{ new Date(updateDate).toLocaleDateString() }}
+    </p>
     <h1>
       <span class="total">{{ totalResults }}</span>
       locations in
@@ -65,6 +69,7 @@ export default {
       isLoading: true,
       results: [],
       totalResults: 0,
+      updateDate: null,
     }
   },
 
@@ -136,6 +141,8 @@ export default {
       const url = `https://data.cdc.gov/api/id/5jp2-pgaw.json?$query=${query}`
       const response = await fetch(url)
       const data = await response.json()
+
+      this.updateDate = response.headers.get('last-modified')
 
       return data
     },

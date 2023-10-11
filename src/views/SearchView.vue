@@ -127,6 +127,7 @@ export default {
           const offset = currentPage * CDC_API_RESULT_LIMIT
           query += `offset ${offset} `
         }
+        query += 'order by `quantity_last_updated` desc '
         query += `limit ${CDC_API_RESULT_LIMIT}`
       }
 

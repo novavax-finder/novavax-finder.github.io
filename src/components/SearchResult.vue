@@ -35,6 +35,9 @@
       <br />
       <boolean-icon :value="result.insurance_accepted" /> insurance accepted
       <br />
+      <boolean-icon :value="result.bridge_access_program === 'TRUE'" />
+      bridge access program
+      <br />
       <boolean-icon :value="result.walkins_accepted" /> walkins accepted
     </div>
   </div>

@@ -16,6 +16,16 @@
     <input type="checkbox" v-model="inStockOnly" />
     in stock only
 
+    <input type="checkbox" v-model="bridge" />
+    bridge access program only
+    <a
+      class="bridge"
+      target="_blank"
+      href="https://www.cdc.gov/vaccines/programs/bridge/index.html"
+    >
+      ?
+    </a>
+
     <page-navigation v-if="isPaginated" :totalResults="totalResults" />
 
     <h2 v-if="isLoading">loading...</h2>
@@ -60,6 +70,7 @@ export default {
 
   data() {
     return {
+      bridge: this.$route.query.bridge || false,
       inStockOnly: this.$route.query.inStockOnly || false,
       isError: false,
       isLoading: true,
@@ -90,6 +101,10 @@ export default {
       await this.reloadData()
     },
 
+    bridge() {
+      this.updateFilters()
+    },
+
     inStockOnly() {
       this.updateFilters()
     },
@@ -103,6 +118,10 @@ export default {
 
       if (city !== 'all') {
         query += ` and (upper(\`loc_admin_city\`) = upper('${city}'))`
+      }
+
+      if (this.bridge) {
+        query += " and (`bridge_access_program` = 'TRUE')"
       }
 
       if (this.inStockOnly) {
@@ -155,6 +174,7 @@ export default {
       this.$router.push({
         params: { page: null },
         query: {
+          bridge: this.bridge || undefined,
           inStockOnly: this.inStockOnly || undefined,
         },
       })
@@ -174,5 +194,14 @@ export default {
 
 .total {
   color: var(--color-yellow);
+}
+
+.bridge {
+  background-color: var(--color-blue);
+  color: white;
+  padding: 0.35em;
+  border-radius: 0.5em;
+  text-decoration: none;
+  font-size: 0.75rem;
 }
 </style>

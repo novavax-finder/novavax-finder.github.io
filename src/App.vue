@@ -18,7 +18,7 @@ export default {
       footerLinks: [
         {
           text: 'data provided by the CDC',
-          url: 'https://data.cdc.gov/Vaccinations/Vaccines-gov-COVID-19-vaccinating-provider-locatio/5jp2-pgaw/data',
+          url: 'https://data.cdc.gov/Vaccinations/Vaccines-gov-COVID-19-vaccinating-provider-locatio/5jp2-pgaw',
         },
         {
           text: 'rollout stats',
@@ -29,8 +29,12 @@ export default {
           url: 'https://www.github.com/novavax-finder/novavax-finder.github.io',
         },
         {
-          text: 'report an issue',
+          text: 'report a technical issue',
           url: 'https://www.reddit.com/message/compose/?to=poop_sox',
+        },
+        {
+          text: 'report a data issue',
+          url: 'mailto:vaccinefinder@cdc.gov',
         },
         {
           text: 'contribute',

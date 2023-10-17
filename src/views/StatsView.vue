@@ -19,6 +19,10 @@
         <strong>{{ stats.availability.total }}</strong>
         total locations
       </h2>
+      <p v-if="updateDate">
+        data last updated by the CDC on
+        {{ new Date(updateDate).toLocaleDateString() }}
+      </p>
     </div>
     <a href="/">go back</a>
   </div>
@@ -34,6 +38,7 @@ export default {
     return {
       isError: false,
       isLoading: true,
+      updateDate: null,
       stats: {
         availability: {
           inStock: '0',
@@ -56,6 +61,7 @@ export default {
           )
       )
       const data = await response.json()
+      this.updateDate = response.headers.get('last-modified')
       return data[0]
     },
 
@@ -64,7 +70,6 @@ export default {
       if (inStockOnly) {
         query += ' and (`in_stock` = true)'
       }
-      query += ` and not contains(upper(\`loc_name\`), upper('cvs'))`
       query += ') ' // end of filters
       query += '|> select count(*) as __count_alias__'
       query = encodeURIComponent(query)

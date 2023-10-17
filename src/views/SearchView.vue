@@ -114,13 +114,13 @@ export default {
       if (count) {
         query += '|> select count(*) as __count_alias__'
       } else {
+        query += 'order by `quantity_last_updated` desc '
         if (page) {
           const pages = Math.ceil(this.totalResults / CDC_API_RESULT_LIMIT)
           const currentPage = Math.max(Math.min(page, pages) - 1, 0)
           const offset = currentPage * CDC_API_RESULT_LIMIT
           query += `offset ${offset} `
         }
-        query += 'order by `quantity_last_updated` desc '
         query += `limit ${CDC_API_RESULT_LIMIT}`
       }
 

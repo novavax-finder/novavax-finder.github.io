@@ -1,6 +1,24 @@
 <template>
   <main>
-    <router-view />
+    <h1>RIP</h1>
+    <h3>2022&ndash;2024</h3>
+    <p>
+      As of August 1, 2024, the CDC has discontinued updates to the data used to
+      power this tool, effectively killing it.
+    </p>
+    <p>
+      <strong>
+        Not all is lost. Novavax has created their own tool,
+        <a href="https://us.novavaxcovidvaccine.com/find-a-vaccine">
+          available here.
+        </a>
+      </strong>
+    </p>
+    <p>
+      It was a good run. Thanks to everyone who contributed ideas and reported
+      bugs. I hope it was useful.
+    </p>
+    <small>&mdash; /u/poop_sox</small>
   </main>
   <footer>
     <span v-for="(link, index) in footerLinks" :key="index">
